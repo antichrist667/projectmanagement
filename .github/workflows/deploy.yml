@@ -1,0 +1,64 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+
+    # Build and push userservice Docker image to Docker Hub
+    - name: Build and push userservice Docker image to Docker Hub
+      run: |
+        docker build -t your-dockerhub-username/userservice:latest ./services/userservice
+        echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+        docker push your-dockerhub-username/userservice:latest
+
+    # Build and push client Docker image to Docker Hub
+    - name: Build and push client Docker image to Docker Hub
+      run: |
+        docker build -t your-dockerhub-username/client:latest ./client
+        echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+        docker push your-dockerhub-username/client:latest
+
+    # Login to Heroku Docker Registry
+    - name: Login to Heroku Docker Registry
+      run: echo ${{ secrets.HEROKU_API_KEY }} | docker login --username=_ --password-stdin registry.heroku.com
+
+    # Build and push Docker image to Heroku container registry for userservice
+    - name: Build and push Docker image to Heroku container registry for userservice
+      run: |
+        docker build -t registry.heroku.com/projectmanagement/web ./services/userservice
+        docker push registry.heroku.com/projectmanagement/web
+
+    # Release Docker image to Heroku for userservice
+    - name: Release Docker image to Heroku for userservice
+      run: |
+        heroku container:release web -a projectmanagement
+
+    # Build and push Docker image to Heroku container registry for client
+    - name: Build and push Docker image to Heroku container registry for client
+      run: |
+        docker build -t registry.heroku.com/projectmanagement/web ./client
+        docker push registry.heroku.com/projectmanagement/web
+
+    # Release Docker image to Heroku for client
+    - name: Release Docker image to Heroku for client
+      run: |
+        heroku container:release web -a projectmanagement
+
+    # Set environment variables on Heroku for userservice
+    - name: Set environment variables on Heroku
+      run: |
+        heroku config:set USER_MYSQL_HOST=${{ secrets.USER_MYSQL_HOST }} USER_MYSQL_USER=${{ secrets.USER_MYSQL_USER }} USER_MYSQL_PASSWORD=${{ secrets.USER_MYSQL_PASSWORD }} USER_MYSQL_DBNAME=${{ secrets.USER_MYSQL_DBNAME }} -a projectmanagement

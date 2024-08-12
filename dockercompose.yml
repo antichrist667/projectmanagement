@@ -1,28 +1,17 @@
 version: '3.8'
+
 services:
   userservice:
     build: ./services/userservice
     ports:
       - "3000:3000"
     environment:
-      - USER_MYSQL_HOST=${USER_MYSQL_HOST}
-      - USER_MYSQL_USER=${USER_MYSQL_USER}
-      - USER_MYSQL_PASSWORD=${USER_MYSQL_PASSWORD}
-      - USER_MYSQL_DBNAME=${USER_MYSQL_DBNAME}
-    depends_on:
-      - db
+      - USER_MYSQL_HOST=mysql-cristiancaiza.alwaysdata.net
+      - USER_MYSQL_USER=357693_cris
+      - USER_MYSQL_PASSWORD=mysql123
+      - USER_MYSQL_DBNAME=cristiancaiza_users
 
-  db:
-    image: mysql:5.7
-    environment:
-      MYSQL_ROOT_PASSWORD: ${USER_MYSQL_PASSWORD}
-      MYSQL_DATABASE: ${USER_MYSQL_DBNAME}
-      MYSQL_USER: ${USER_MYSQL_USER}
-      MYSQL_PASSWORD: ${USER_MYSQL_PASSWORD}
+  client:
+    build: ./client
     ports:
-      - "3306:3306"
-    volumes:
-      - db_data:/var/lib/mysql
-
-volumes:
-  db_data:
+      - "3100:80"
