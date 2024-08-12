@@ -25,13 +25,6 @@ jobs:
         echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
         docker push antichrist667/userservice:latest
 
-    # Build and push client Docker image to Docker Hub
-    - name: Build and push client Docker image to Docker Hub
-      run: |
-        docker build -t antichrist667/client:latest ./client
-        echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-        docker push antichrist667/client:latest
-
     # Login to Heroku Docker Registry
     - name: Login to Heroku Docker Registry
       run: echo ${{ secrets.HEROKU_API_KEY }} | docker login --username=_ --password-stdin registry.heroku.com
@@ -44,17 +37,6 @@ jobs:
 
     # Release Docker image to Heroku for userservice
     - name: Release Docker image to Heroku for userservice
-      run: |
-        heroku container:release web -a projectmanagement
-
-    # Build and push Docker image to Heroku container registry for client
-    - name: Build and push Docker image to Heroku container registry for client
-      run: |
-        docker build -t registry.heroku.com/projectmanagement/web ./client
-        docker push registry.heroku.com/projectmanagement/web
-
-    # Release Docker image to Heroku for client
-    - name: Release Docker image to Heroku for client
       run: |
         heroku container:release web -a projectmanagement
 
