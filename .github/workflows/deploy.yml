@@ -21,16 +21,16 @@ jobs:
     # Build and push userservice Docker image to Docker Hub
     - name: Build and push userservice Docker image to Docker Hub
       run: |
-        docker build -t your-dockerhub-username/userservice:latest ./services/userservice
+        docker build -t antichrist667/userservice:latest ./services/userservice
         echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-        docker push your-dockerhub-username/userservice:latest
+        docker push antichrist667/userservice:latest
 
     # Build and push client Docker image to Docker Hub
     - name: Build and push client Docker image to Docker Hub
       run: |
-        docker build -t your-dockerhub-username/client:latest ./client
+        docker build -t antichrist667/client:latest ./client
         echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-        docker push your-dockerhub-username/client:latest
+        docker push antichrist667/client:latest
 
     # Login to Heroku Docker Registry
     - name: Login to Heroku Docker Registry
