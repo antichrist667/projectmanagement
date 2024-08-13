@@ -29,25 +29,25 @@ jobs:
     - name: Deploy userservice to Heroku
       run: |
         echo ${{ secrets.HEROKU_API_KEY }} | docker login --username=_ --password-stdin registry.heroku.com
-        docker tag antichrist667/userservice:latest registry.heroku.com/projectmanagement/web
-        docker push registry.heroku.com/projectmanagement/web
-        heroku container:release web --app projectmanagement
+        docker tag antichrist667/userservice:latest registry.heroku.com/userservice/web
+        docker push registry.heroku.com/userservice/web
+        heroku container:release web --app userservice
       env:
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
 
-    # Build and push frontend Docker image to Docker Hub
-    - name: Build and push frontend Docker image to Docker Hub
+    # Build and push loginservice Docker image to Docker Hub
+    - name: Build and push loginservice Docker image to Docker Hub
       run: |
-        docker build -t antichrist667/frontend:latest ./client
+        docker build -t antichrist667/loginservice:latest ./services/loginservice
         echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-        docker push antichrist667/frontend:latest
+        docker push antichrist667/loginservice:latest
 
-    # Deploy frontend to Heroku using the Docker image
-    - name: Deploy frontend to Heroku
+    # Deploy loginservice to Heroku using the Docker image
+    - name: Deploy loginservice to Heroku
       run: |
         echo ${{ secrets.HEROKU_API_KEY }} | docker login --username=_ --password-stdin registry.heroku.com
-        docker tag antichrist667/frontend:latest registry.heroku.com/projectfrontend/web
-        docker push registry.heroku.com/projectfrontend/web
-        heroku container:release web --app projectfrontend
+        docker tag antichrist667/loginservice:latest registry.heroku.com/loginservice/web
+        docker push registry.heroku.com/loginservice/web
+        heroku container:release web --app loginservice
       env:
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}

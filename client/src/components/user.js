@@ -1,5 +1,5 @@
 // src/components/user.js
-const API_URL = 'https://projectmanagement-fbd33389f875.herokuapp.com/api';
+const API_URL = 'http://localhost:3000/api';
 import React, { useState, useEffect } from 'react';
 
 const Userlist = () => {
