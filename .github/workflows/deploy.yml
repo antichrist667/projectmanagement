@@ -18,29 +18,15 @@ jobs:
       with:
         node-version: '14'
 
-    # Build and push userservice Docker image to Docker Hub
-    - name: Build and push userservice Docker image to Docker Hub
+    - name: Build Docker image
       run: |
-        docker build -t antichrist667/userservice:latest ./services/userservice
-        echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-        docker push antichrist667/userservice:latest
+        docker build -t registry.heroku.com/projectmanagement/web ./services/userservice
 
-    # Login to Heroku Docker Registry
     - name: Login to Heroku Docker Registry
       run: echo ${{ secrets.HEROKU_API_KEY }} | docker login --username=_ --password-stdin registry.heroku.com
 
-    # Tag and push the same Docker image to Heroku container registry
-    - name: Tag and push Docker image to Heroku container registry
-      run: |
-        docker tag antichrist667/userservice:latest registry.heroku.com/projectmanagement/web
-        docker push registry.heroku.com/projectmanagement/web
+    - name: Push Docker image to Heroku
+      run: docker push registry.heroku.com/projectmanagement/web
 
-    # Release Docker image to Heroku
-    - name: Release Docker image to Heroku
-      run: |
-        heroku container:release web -a projectmanagement
-
-    # Set environment variables on Heroku
-    - name: Set environment variables on Heroku
-      run: |
-        heroku config:set USER_MYSQL_HOST=${{ secrets.USER_MYSQL_HOST }} USER_MYSQL_USER=${{ secrets.USER_MYSQL_USER }} USER_MYSQL_PASSWORD=${{ secrets.USER_MYSQL_PASSWORD }} USER_MYSQL_DBNAME=${{ secrets.USER_MYSQL_DBNAME }} -a projectmanagement
+    - name: Release Docker image on Heroku
+      run: heroku container:release web -a projectmanagement
