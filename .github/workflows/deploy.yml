@@ -38,7 +38,7 @@ jobs:
     # Build and push loginservice Docker image to Docker Hub
     - name: Build and push loginservice Docker image to Docker Hub
       run: |
-        docker build -t antichrist667/loginservice:latest ./services/loginservice
+        docker build -t antichrist667/loginservice:latest ./services/login
         echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
         docker push antichrist667/loginservice:latest
 
