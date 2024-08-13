@@ -46,8 +46,8 @@ jobs:
     - name: Deploy frontend to Heroku
       run: |
         echo ${{ secrets.HEROKU_API_KEY }} | docker login --username=_ --password-stdin registry.heroku.com
-        docker tag antichrist667/frontend:latest registry.heroku.com/projectmanagement-frontend/web
-        docker push registry.heroku.com/projectmanagement-frontend/web
-        heroku container:release web --app projectmanagement-frontend
+        docker tag antichrist667/frontend:latest registry.heroku.com/projectfrontend/web
+        docker push registry.heroku.com/projectfrontend/web
+        heroku container:release web --app projectfrontend
       env:
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
