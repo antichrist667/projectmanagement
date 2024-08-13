@@ -1,21 +1,21 @@
-// src/components/userlist.js
+// src/components/user.js
+const API_URL = 'https://projectmanagement-fbd33389f875.herokuapp.com/api';
 import React, { useState, useEffect } from 'react';
 
 const Userlist = () => {
   const [users, setUsers] = useState([]);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');  // Nuevo estado para la contraseña
+  const [password, setPassword] = useState('');
   const [editingUser, setEditingUser] = useState(null);
 
   useEffect(() => {
     fetchUsers();
   }, []);
 
-  // Función para obtener los usuarios desde la API
   const fetchUsers = async () => {
     try {
-      const response = await fetch('/api/users');
+      const response = await fetch(`${API_URL}/users`); 
       const data = await response.json();
       setUsers(data);
     } catch (error) {
@@ -23,12 +23,11 @@ const Userlist = () => {
     }
   };
 
-  // Función para crear un nuevo usuario
   const handleCreateUser = async (e) => {
     e.preventDefault();
     const newUser = { name, email, password };
     try {
-      const response = await fetch('/api/users', {
+      const response = await fetch(`${API_URL}/users`, { 
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -36,30 +35,28 @@ const Userlist = () => {
         body: JSON.stringify(newUser),
       });
       if (response.ok) {
-        fetchUsers(); // Actualiza la lista de usuarios
-        setName('');  // Limpia el campo de nombre
-        setEmail(''); // Limpia el campo de email
-        setPassword(''); // Limpia el campo de contraseña
+        fetchUsers();
+        setName('');
+        setEmail('');
+        setPassword('');
       }
     } catch (error) {
       console.error('Error creating user:', error);
     }
   };
 
-  // Función para editar un usuario existente
   const handleEditUser = (user) => {
     setName(user.name);
     setEmail(user.email);
-    setPassword('');  // Resetea el campo de contraseña, para que no se muestre la contraseña actual
+    setPassword('');
     setEditingUser(user.id);
   };
 
-  // Función para actualizar un usuario
   const handleUpdateUser = async (e) => {
     e.preventDefault();
     const updatedUser = { name, email, password };
     try {
-      const response = await fetch(`/api/users/${editingUser}`, {
+      const response = await fetch(`${API_URL}/users/${editingUser}`, { 
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -67,25 +64,24 @@ const Userlist = () => {
         body: JSON.stringify(updatedUser),
       });
       if (response.ok) {
-        fetchUsers(); // Actualiza la lista de usuarios
-        setName('');  // Limpia el campo de nombre
-        setEmail(''); // Limpia el campo de email
-        setPassword(''); // Limpia el campo de contraseña
-        setEditingUser(null); // Sale del modo de edición
+        fetchUsers();
+        setName('');
+        setEmail('');
+        setPassword('');
+        setEditingUser(null);
       }
     } catch (error) {
       console.error('Error updating user:', error);
     }
   };
 
-  // Función para eliminar un usuario
   const handleDeleteUser = async (userId) => {
     try {
-      const response = await fetch(`/api/users/${userId}`, {
+      const response = await fetch(`${API_URL}/users/${userId}`, { 
         method: 'DELETE',
       });
       if (response.ok) {
-        fetchUsers(); // Actualiza la lista de usuarios
+        fetchUsers();
       }
     } catch (error) {
       console.error('Error deleting user:', error);
