@@ -25,22 +25,12 @@ jobs:
         echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
         docker push antichrist667/userservice:latest
 
-    # Login to Heroku Docker Registry
-    - name: Login to Heroku Docker Registry
-      run: echo ${{ secrets.HEROKU_API_KEY }} | docker login --username=_ --password-stdin registry.heroku.com
-
-    # Build and push Docker image to Heroku container registry for userservice
-    - name: Build and push Docker image to Heroku container registry for userservice
+    # Deploy to Heroku using the Docker image
+    - name: Deploy to Heroku
       run: |
-        docker build -t registry.heroku.com/projectmanagement/web ./services/userservice
+        echo ${{ secrets.HEROKU_API_KEY }} | docker login --username=_ --password-stdin registry.heroku.com
+        docker tag antichrist667/userservice:latest registry.heroku.com/projectmanagement/web
         docker push registry.heroku.com/projectmanagement/web
-
-    # Release Docker image to Heroku for userservice
-    - name: Release Docker image to Heroku for userservice
-      run: |
-        heroku container:release web -a projectmanagement
-
-    # Set environment variables on Heroku for userservice
-    - name: Set environment variables on Heroku
-      run: |
-        heroku config:set USER_MYSQL_HOST=${{ secrets.USER_MYSQL_HOST }} USER_MYSQL_USER=${{ secrets.USER_MYSQL_USER }} USER_MYSQL_PASSWORD=${{ secrets.USER_MYSQL_PASSWORD }} USER_MYSQL_DBNAME=${{ secrets.USER_MYSQL_DBNAME }} -a projectmanagement
+        heroku container:release web --app projectmanagement
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
