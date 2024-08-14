@@ -14,10 +14,29 @@ const Login = () => {
       const response = await axios.post('https://loginservice-368e8b956546.herokuapp.com/api/login', {
         email,
         password,
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
       });
-      setError('');
-      navigate('/dashboard');
+
+      // Inspecciona la respuesta para asegurarte de que es lo que esperas
+      console.log(response.data);
+
+      if (response.data && response.data.token) {
+        // Guarda el token en el almacenamiento local (si es necesario)
+        localStorage.setItem('token', response.data.token);
+        // Limpia cualquier error previo
+        setError('');
+        // Redirige al usuario al dashboard
+        navigate('/dashboard');
+      } else {
+        // Muestra un error si no se obtuvo el token
+        setError('Login failed. Please check your credentials.');
+      }
     } catch (error) {
+      // Muestra un error si la solicitud falló
+      console.error('Error during login:', error);
       setError('Login failed. Please check your credentials.');
     }
   };
