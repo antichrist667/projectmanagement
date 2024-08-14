@@ -51,3 +51,20 @@ jobs:
         heroku container:release web --app loginservice
       env:
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+
+    # Build and push frontend Docker image to Docker Hub
+    - name: Build and push frontend Docker image to Docker Hub
+      run: |
+        docker build -t antichrist667/frontend:latest ./frontend
+        echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+        docker push antichrist667/frontend:latest
+
+    # Deploy frontend to Heroku using the Docker image
+    - name: Deploy frontend to Heroku
+      run: |
+        echo ${{ secrets.HEROKU_API_KEY }} | docker login --username=_ --password-stdin registry.heroku.com
+        docker tag antichrist667/frontend:latest registry.heroku.com/projectfrontend/web
+        docker push registry.heroku.com/projectfrontend/web
+        heroku container:release web --app projectfrontend
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
