@@ -10,6 +10,5 @@ server {
         try_files $uri $uri/ /index.html;
     }
 
-    # Utiliza el puerto asignado por Heroku
     listen ${PORT};
 }
