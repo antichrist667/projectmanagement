@@ -6,6 +6,7 @@ const UserCrud = () => {
   const [newUser, setNewUser] = useState({ name: '', email: '', password: '' });
   const [selectedUser, setSelectedUser] = useState(null);
 
+  // Fetch users from the backend when the component loads
   useEffect(() => {
     fetchUsers();
   }, []);
@@ -15,36 +16,39 @@ const UserCrud = () => {
       const response = await axios.get('https://userservice-8bd80403ee07.herokuapp.com/api/users');
       setUsers(response.data);
     } catch (error) {
-      console.error(error);
+      console.error('Error fetching users:', error);
     }
   };
 
   const createUser = async () => {
     try {
       await axios.post('https://userservice-8bd80403ee07.herokuapp.com/api/users', newUser);
-      fetchUsers();
+      setNewUser({ name: '', email: '', password: '' }); // Clear the input fields after creating a user
+      fetchUsers(); // Refresh the list of users after creating a new user
     } catch (error) {
-      console.error(error);
+      console.error('Error creating user:', error);
     }
   };
 
   const updateUser = async () => {
     try {
       await axios.put(`https://userservice-8bd80403ee07.herokuapp.com/api/users/${selectedUser.id}`, selectedUser);
-      fetchUsers();
+      setSelectedUser(null); // Clear the selected user after updating
+      fetchUsers(); // Refresh the list of users after updating a user
     } catch (error) {
-      console.error(error);
+      console.error('Error updating user:', error);
     }
   };
 
   const deleteUser = async (id) => {
     try {
       await axios.delete(`https://userservice-8bd80403ee07.herokuapp.com/api/users/${id}`);
-      fetchUsers();
+      fetchUsers(); // Refresh the list of users after deleting a user
     } catch (error) {
-      console.error(error);
+      console.error('Error deleting user:', error);
     }
   };
+  console.log('UserCrud Loaded');
 
   return (
     <div className="container mt-5">
