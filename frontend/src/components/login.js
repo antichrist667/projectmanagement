@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -16,7 +16,7 @@ const Login = () => {
         password,
       });
       setError('');
-      history.push('/dashboard');
+      navigate('/dashboard');
     } catch (error) {
       setError('Login failed. Please check your credentials.');
     }

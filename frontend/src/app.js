@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Login from './components/login';
 import Dashboard from './components/dashboard';
 import UserCrud from './components/usercrud';
@@ -7,11 +7,11 @@ import UserCrud from './components/usercrud';
 const App = () => {
   return (
     <Router>
-      <Switch>
-        <Route path="/" exact component={Login} />
-        <Route path="/dashboard" component={Dashboard} />
-        <Route path="/user-crud" component={UserCrud} />
-      </Switch>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/user-crud" element={<UserCrud />} />
+      </Routes>
     </Router>
   );
 };
