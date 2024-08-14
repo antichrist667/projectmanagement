@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const UserCrud = () => {
   const [users, setUsers] = useState([]);
-  const [newUser, setNewUser] = useState({ email: '', password: '' });
+  const [newUser, setNewUser] = useState({ name: '', email: '', password: '' });
   const [selectedUser, setSelectedUser] = useState(null);
 
   useEffect(() => {
@@ -50,6 +50,13 @@ const UserCrud = () => {
     <div className="container mt-5">
       <h2>User Management</h2>
       <div className="mb-3">
+        <label>Name</label>
+        <input 
+          type="text" 
+          className="form-control" 
+          value={newUser.name} 
+          onChange={(e) => setNewUser({ ...newUser, name: e.target.value })} 
+        />
         <label>Email</label>
         <input 
           type="email" 
@@ -71,7 +78,7 @@ const UserCrud = () => {
       <ul className="list-group">
         {users.map(user => (
           <li key={user.id} className="list-group-item">
-            {user.email}
+            {user.name} - {user.email}
             <button className="btn btn-danger float-end" onClick={() => deleteUser(user.id)}>Delete</button>
             <button 
               className="btn btn-warning float-end me-2" 
@@ -85,6 +92,13 @@ const UserCrud = () => {
       {selectedUser && (
         <div className="mt-4">
           <h4>Edit User</h4>
+          <label>Name</label>
+          <input 
+            type="text" 
+            className="form-control" 
+            value={selectedUser.name} 
+            onChange={(e) => setSelectedUser({ ...selectedUser, name: e.target.value })} 
+          />
           <label>Email</label>
           <input 
             type="email" 
