@@ -1,13 +1,20 @@
-FROM node:14 AS build
+# Usa una imagen base de Node.js oficial
+FROM node:14-alpine
+
+# Establece el directorio de trabajo en el contenedor
 WORKDIR /app
-COPY package.json ./
-COPY package-lock.json ./
-RUN npm install
-COPY . ./
-RUN npm run build
 
-FROM nginx:alpine
-COPY --from=build /app/build /usr/share/nginx/html
-COPY nginx.conf.template /etc/nginx/conf.d/default.conf
+# Copia el package.json y package-lock.json para instalar las dependencias
+COPY package*.json ./
 
-CMD ["nginx", "-g", "daemon off;"]
+# Instala las dependencias de la aplicación
+RUN npm install --production
+
+# Copia el resto del código de la aplicación
+COPY . .
+
+# Expone el puerto en el que se ejecutará la aplicación
+EXPOSE 3000
+
+# Comando para correr la aplicación
+CMD ["node", "server.js"]
