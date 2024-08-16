@@ -18,53 +18,42 @@ jobs:
       with:
         node-version: '14'
 
-    # Build and push userservice Docker image to Docker Hub
-    - name: Build and push userservice Docker image to Docker Hub
+    # Configurar gcloud CLI
+    - name: Configurar gcloud CLI
       run: |
-        docker build -t antichrist667/userservice:latest ./services/userservice
-        echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-        docker push antichrist667/userservice:latest
+        echo "${{ secrets.GCP_SA_KEY }}" > "${HOME}/gcloud-key.json"
+        gcloud auth activate-service-account --key-file="${HOME}/gcloud-key.json"
+        gcloud config set project ${{ secrets.GCP_PROJECT_ID }}
 
-    # Deploy userservice to Heroku using the Docker image
-    - name: Deploy userservice to Heroku
+    # Build and push userservice Docker image to Google Container Registry (GCR)
+    - name: Build and push userservice Docker image to Google Container Registry
       run: |
-        echo ${{ secrets.HEROKU_API_KEY }} | docker login --username=_ --password-stdin registry.heroku.com
-        docker tag antichrist667/userservice:latest registry.heroku.com/userservice/web
-        docker push registry.heroku.com/userservice/web
-        heroku container:release web --app userservice
-      env:
-        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/userservice:latest ./services/userservice
+        docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/userservice:latest
 
-    # Build and push loginservice Docker image to Docker Hub
-    - name: Build and push loginservice Docker image to Docker Hub
+    # Deploy userservice to Google Cloud Run
+    - name: Deploy userservice to Google Cloud Run
       run: |
-        docker build -t antichrist667/loginservice:latest ./services/login
-        echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-        docker push antichrist667/loginservice:latest
+        gcloud run deploy userservice --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/userservice:latest --platform managed --region ${{ secrets.GCP_REGION }} --allow-unauthenticated
 
-    # Deploy loginservice to Heroku using the Docker image
-    - name: Deploy loginservice to Heroku
+    # Build and push loginservice Docker image to Google Container Registry (GCR)
+    - name: Build and push loginservice Docker image to Google Container Registry
       run: |
-        echo ${{ secrets.HEROKU_API_KEY }} | docker login --username=_ --password-stdin registry.heroku.com
-        docker tag antichrist667/loginservice:latest registry.heroku.com/loginservice/web
-        docker push registry.heroku.com/loginservice/web
-        heroku container:release web --app loginservice
-      env:
-        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/loginservice:latest ./services/login
+        docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/loginservice:latest
 
-    # Build and push frontend Docker image to Docker Hub
-    - name: Build and push frontend Docker image to Docker Hub
+    # Deploy loginservice to Google Cloud Run
+    - name: Deploy loginservice to Google Cloud Run
       run: |
-        docker build -t antichrist667/frontend:latest ./frontend
-        echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-        docker push antichrist667/frontend:latest
+        gcloud run deploy loginservice --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/loginservice:latest --platform managed --region ${{ secrets.GCP_REGION }} --allow-unauthenticated
 
-    # Deploy frontend to Heroku using the Docker image
-    - name: Deploy frontend to Heroku
+    # Build and push frontend Docker image to Google Container Registry (GCR)
+    - name: Build and push frontend Docker image to Google Container Registry
       run: |
-        echo ${{ secrets.HEROKU_API_KEY }} | docker login --username=_ --password-stdin registry.heroku.com
-        docker tag antichrist667/frontend:latest registry.heroku.com/projectfrontend/web
-        docker push registry.heroku.com/projectfrontend/web
-        heroku container:release web --app projectfrontend
-      env:
-        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/frontend:latest ./frontend
+        docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/frontend:latest
+
+    # Deploy frontend to Google Cloud Run
+    - name: Deploy frontend to Google Cloud Run
+      run: |
+        gcloud run deploy frontend --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/frontend:latest --platform managed --region ${{ secrets.GCP_REGION }} --allow-unauthenticated
