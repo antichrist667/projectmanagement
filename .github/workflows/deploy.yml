@@ -9,6 +9,10 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
+    env:
+      GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+      GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+
     steps:
     - name: Checkout del código
       uses: actions/checkout@v2
@@ -18,34 +22,33 @@ jobs:
       with:
         node-version: '14'
 
-    # Configurar gcloud CLI y Docker
     - name: Configurar gcloud CLI y Docker
-      env:
-        GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
-        GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
       run: |
+        # Guarda la clave de la cuenta de servicio en un archivo temporal
         echo "$GCP_SA_KEY" > "${HOME}/gcloud-key.json"
+        
+        # Activa la cuenta de servicio
         gcloud auth activate-service-account --key-file="${HOME}/gcloud-key.json"
+        
+        # Configura el proyecto de Google Cloud
         gcloud config set project $GCP_PROJECT_ID
+        
+        # Configura Docker para autenticar con Google Container Registry
         gcloud auth configure-docker
 
     - name: Verificar GCP_PROJECT_ID
-       run: echo "GCP_PROJECT_ID is $GCP_PROJECT_ID"
-    
+      run: echo "GCP_PROJECT_ID es $GCP_PROJECT_ID"
 
-    # Construir y enviar la imagen Docker de userservice al Google Container Registry (GCR)
     - name: Construir y enviar la imagen Docker de userservice a Google Container Registry
       run: |
         docker build -t gcr.io/$GCP_PROJECT_ID/userservice:latest ./services/userservice
         docker push gcr.io/$GCP_PROJECT_ID/userservice:latest
 
-    # Construir y enviar la imagen Docker de loginservice al Google Container Registry (GCR)
     - name: Construir y enviar la imagen Docker de loginservice a Google Container Registry
       run: |
         docker build -t gcr.io/$GCP_PROJECT_ID/loginservice:latest ./services/login
         docker push gcr.io/$GCP_PROJECT_ID/loginservice:latest
 
-    # Construir y enviar la imagen Docker de frontend al Google Container Registry (GCR)
     - name: Construir y enviar la imagen Docker de frontend a Google Container Registry
       run: |
         docker build -t gcr.io/$GCP_PROJECT_ID/frontend:latest ./frontend
