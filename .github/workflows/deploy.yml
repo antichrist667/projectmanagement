@@ -29,6 +29,10 @@ jobs:
         gcloud config set project $GCP_PROJECT_ID
         gcloud auth configure-docker
 
+    - name: Verificar GCP_PROJECT_ID
+       run: echo "GCP_PROJECT_ID is $GCP_PROJECT_ID"
+    
+
     # Construir y enviar la imagen Docker de userservice al Google Container Registry (GCR)
     - name: Construir y enviar la imagen Docker de userservice a Google Container Registry
       run: |
