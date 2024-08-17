@@ -12,44 +12,47 @@ jobs:
     env:
       GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
       GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+      GCP_REGION: ${{ secrets.GCP_REGION }}
 
     steps:
-    - name: Checkout del código
+    - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Configurar Node.js
+    - name: Set up Node.js
       uses: actions/setup-node@v2
       with:
         node-version: '14'
 
-    - name: Configurar gcloud CLI y Docker
+    - name: Set up gcloud CLI and Docker
       run: |
-        # Guarda la clave de la cuenta de servicio en un archivo temporal
         echo "$GCP_SA_KEY" > "${HOME}/gcloud-key.json"
-        
-        # Activa la cuenta de servicio
         gcloud auth activate-service-account --key-file="${HOME}/gcloud-key.json"
-        
-        # Configura el proyecto de Google Cloud
         gcloud config set project $GCP_PROJECT_ID
-        
-        # Configura Docker para autenticar con Google Container Registry
         gcloud auth configure-docker
 
-    - name: Verificar GCP_PROJECT_ID
-      run: echo "GCP_PROJECT_ID es $GCP_PROJECT_ID"
-
-    - name: Construir y enviar la imagen Docker de userservice a Google Container Registry
+    - name: Build and push userservice Docker image to Google Container Registry
       run: |
         docker build -t gcr.io/$GCP_PROJECT_ID/userservice:latest ./services/userservice
         docker push gcr.io/$GCP_PROJECT_ID/userservice:latest
 
-    - name: Construir y enviar la imagen Docker de loginservice a Google Container Registry
+    - name: Deploy userservice to Cloud Run
+      run: |
+        gcloud run deploy userservice --image gcr.io/$GCP_PROJECT_ID/userservice:latest --platform managed --region $GCP_REGION --allow-unauthenticated
+
+    - name: Build and push loginservice Docker image to Google Container Registry
       run: |
         docker build -t gcr.io/$GCP_PROJECT_ID/loginservice:latest ./services/login
         docker push gcr.io/$GCP_PROJECT_ID/loginservice:latest
 
-    - name: Construir y enviar la imagen Docker de frontend a Google Container Registry
+    - name: Deploy loginservice to Cloud Run
+      run: |
+        gcloud run deploy loginservice --image gcr.io/$GCP_PROJECT_ID/loginservice:latest --platform managed --region $GCP_REGION --allow-unauthenticated
+
+    - name: Build and push frontend Docker image to Google Container Registry
       run: |
         docker build -t gcr.io/$GCP_PROJECT_ID/frontend:latest ./frontend
         docker push gcr.io/$GCP_PROJECT_ID/frontend:latest
+
+    - name: Deploy frontend to Cloud Run
+      run: |
+        gcloud run deploy frontend --image gcr.io/$GCP_PROJECT_ID/frontend:latest --platform managed --region $GCP_REGION --allow-unauthenticated
