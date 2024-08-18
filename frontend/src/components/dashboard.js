@@ -8,6 +8,10 @@ const Dashboard = () => {
     navigate('/user-crud');
   };
 
+  const navigateToAuditLogs = () => {
+    navigate('/audit-logs');
+  };
+
   return (
     <div className="container mt-5">
       <h2>Dashboard</h2>
@@ -17,7 +21,7 @@ const Dashboard = () => {
         <button className="btn btn-secondary">Button 3</button>
         <button className="btn btn-secondary">Button 4</button>
         <button className="btn btn-secondary">Button 5</button>
-        <button className="btn btn-secondary">Button 6</button>
+        <button className="btn btn-secondary" onClick={navigateToAuditLogs}>AUDIT LOGS</button>
       </div>
     </div>
   );
