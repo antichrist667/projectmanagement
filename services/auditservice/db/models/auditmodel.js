@@ -19,7 +19,11 @@ const AuditLog = sequelize.define('AuditLog', {
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW,
     allowNull: false
-  }
+  },
+  email: {
+        type: DataTypes.STRING, 
+        allowNull: true
+    }
 }, {
   tableName: 'audit_logs',
   timestamps: false
