@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom'; 
 
 const UserCrud = () => {
   const [users, setUsers] = useState([]);
@@ -7,6 +8,8 @@ const UserCrud = () => {
   const [selectedUser, setSelectedUser] = useState(null);
 
   const userServiceUrl = 'https://userservice-zondeli7dq-uc.a.run.app/api/users';
+  
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     fetchUsers();
@@ -50,11 +53,19 @@ const UserCrud = () => {
     }
   };
 
-  console.log('UserCrud Loaded');
+  const goToDashboard = () => {
+    navigate('/dashboard'); 
+  };
 
   return (
     <div className="container mt-5">
       <h2>User Management</h2>
+      <button 
+        className="btn btn-primary mb-4" 
+        onClick={goToDashboard}
+      >
+        Back to Dashboard
+      </button>
       <div className="mb-3">
         <label>Name</label>
         <input 

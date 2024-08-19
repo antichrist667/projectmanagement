@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom'; 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const AuditLogs = () => {
   const [auditLogs, setAuditLogs] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [logsPerPage] = useState(5); // Define cuántos logs quieres mostrar por página
-
+  const [logsPerPage] = useState(5); 
   const auditServiceUrl = 'https://auditservice-zondeli7dq-uc.a.run.app/api/auditlogs';
+
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     fetchAuditLogs();
@@ -22,13 +24,15 @@ const AuditLogs = () => {
     }
   };
 
-  // Obtener los logs actuales para la página actual
   const indexOfLastLog = currentPage * logsPerPage;
   const indexOfFirstLog = indexOfLastLog - logsPerPage;
   const currentLogs = auditLogs.slice(indexOfFirstLog, indexOfLastLog);
 
-  // Cambiar de página
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const goToDashboard = () => {
+    navigate('/dashboard'); 
+  };
 
   return (
     <div className="container mt-5">
@@ -45,19 +49,26 @@ const AuditLogs = () => {
               </li>
             ))}
           </ul>
-          <Pagination 
-            logsPerPage={logsPerPage} 
-            totalLogs={auditLogs.length} 
-            paginate={paginate}
-            currentPage={currentPage}
-          />
+          <div className="d-flex justify-content-between mt-4">
+            <button 
+              className="btn btn-primary" 
+              onClick={goToDashboard}
+            >
+              Back to Dashboard
+            </button>
+            <Pagination 
+              logsPerPage={logsPerPage} 
+              totalLogs={auditLogs.length} 
+              paginate={paginate}
+              currentPage={currentPage}
+            />
+          </div>
         </div>
       </div>
     </div>
   );
 };
 
-// Componente de Paginación
 const Pagination = ({ logsPerPage, totalLogs, paginate, currentPage }) => {
   const pageNumbers = [];
 
@@ -66,7 +77,7 @@ const Pagination = ({ logsPerPage, totalLogs, paginate, currentPage }) => {
   }
 
   return (
-    <nav className="mt-4">
+    <nav>
       <ul className="pagination justify-content-center">
         {pageNumbers.map(number => (
           <li key={number} className={`page-item ${currentPage === number ? 'active' : ''}`}>
