@@ -57,15 +57,6 @@ jobs:
       run: |
         gcloud run deploy auditservice --image gcr.io/$GCP_PROJECT_ID/auditservice:latest --platform managed --region $GCP_REGION --allow-unauthenticated
 
-    - name: Build and push frontend Docker image to Google Container Registry
-      run: |
-        docker build -t gcr.io/$GCP_PROJECT_ID/frontend:latest ./frontend
-        docker push gcr.io/$GCP_PROJECT_ID/frontend:latest
-
-    - name: Deploy frontend to Cloud Run
-      run: |
-        gcloud run deploy frontend --image gcr.io/$GCP_PROJECT_ID/frontend:latest --platform managed --region $GCP_REGION --allow-unauthenticated
-
     - name: Build and push projectservice Docker image to Google Container Registry
       run: |
         docker build -t gcr.io/$GCP_PROJECT_ID/projectservice:latest ./services/projectservice
@@ -74,3 +65,12 @@ jobs:
     - name: Deploy projectservice to Cloud Run
       run: |
         gcloud run deploy projectservice --image gcr.io/$GCP_PROJECT_ID/projectservice:latest --platform managed --region $GCP_REGION --allow-unauthenticated
+
+    - name: Build and push frontend Docker image to Google Container Registry
+      run: |
+        docker build -t gcr.io/$GCP_PROJECT_ID/frontend:latest ./frontend
+        docker push gcr.io/$GCP_PROJECT_ID/frontend:latest
+
+    - name: Deploy frontend to Cloud Run
+      run: |
+        gcloud run deploy frontend --image gcr.io/$GCP_PROJECT_ID/frontend:latest --platform managed --region $GCP_REGION --allow-unauthenticated

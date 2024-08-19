@@ -11,7 +11,7 @@ app.use(express.json());
 
 app.use('/api', projectRoutes);
 
-const PORT = process.env.PROJECT_PORT || 3001;
+const PORT = process.env.PROJECT_PORT || 8080;
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
