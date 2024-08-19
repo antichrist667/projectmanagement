@@ -11,6 +11,10 @@ const AuditLog = sequelize.define('AuditLog', {
     type: DataTypes.INTEGER,
     allowNull: true
   },
+  email: {
+    type: DataTypes.STRING,  // Campo email añadido
+    allowNull: true
+  },
   success: {
     type: DataTypes.BOOLEAN,
     allowNull: false
@@ -19,11 +23,7 @@ const AuditLog = sequelize.define('AuditLog', {
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW,
     allowNull: false
-  },
-  email: {
-        type: DataTypes.STRING, 
-        allowNull: true
-    }
+  }
 }, {
   tableName: 'audit_logs',
   timestamps: false
