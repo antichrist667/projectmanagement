@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -12,16 +13,44 @@ const Dashboard = () => {
     navigate('/audit-logs');
   };
 
+  const navigateToCreateProject = () => {
+    navigate('/create-project');
+  };
+
+  const navigateToReadProjects = () => {
+    navigate('/read-projects');
+  };
+
+  const navigateToUpdateProject = () => {
+    navigate('/update-project');
+  };
+
+  const navigateToDeleteProject = () => {
+    navigate('/delete-project');
+  };
+
   return (
     <div className="container mt-5">
       <h2>Dashboard</h2>
-      <div className="d-grid gap-2">
-        <button className="btn btn-primary" onClick={navigateToUserCrud}>USER</button>
-        <button className="btn btn-secondary">Button 2</button>
-        <button className="btn btn-secondary">Button 3</button>
-        <button className="btn btn-secondary">Button 4</button>
-        <button className="btn btn-secondary">Button 5</button>
-        <button className="btn btn-secondary" onClick={navigateToAuditLogs}>AUDIT LOGS</button>
+      <div className="row gy-3">
+        <div className="col-md-6">
+          <button className="btn btn-primary btn-lg btn-block" onClick={navigateToUserCrud}>USER</button>
+        </div>
+        <div className="col-md-6">
+          <button className="btn btn-secondary btn-lg btn-block" onClick={navigateToAuditLogs}>AUDIT LOGS</button>
+        </div>
+        <div className="col-md-6">
+          <button className="btn btn-success btn-lg btn-block" onClick={navigateToCreateProject}>CREATE PROJECT</button>
+        </div>
+        <div className="col-md-6">
+          <button className="btn btn-success btn-lg btn-block" onClick={navigateToReadProjects}>READ PROJECTS</button>
+        </div>
+        <div className="col-md-6">
+          <button className="btn btn-success btn-lg btn-block" onClick={navigateToUpdateProject}>UPDATE PROJECT</button>
+        </div>
+        <div className="col-md-6">
+          <button className="btn btn-success btn-lg btn-block" onClick={navigateToDeleteProject}>DELETE PROJECT</button>
+        </div>
       </div>
     </div>
   );
