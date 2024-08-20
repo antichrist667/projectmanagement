@@ -27,7 +27,7 @@ jobs:
 
     - name: Build and push documentservices Docker image to Google Container Registry
       run: |
-        docker build -t gcr.io/$GCP_PROJECT_ID/documentservices:latest .
+        docker build -t gcr.io/$GCP_PROJECT_ID/documentservices:latest ./services/documentservice
         docker push gcr.io/$GCP_PROJECT_ID/documentservices:latest
 
     - name: Deploy documentservices to Cloud Run
