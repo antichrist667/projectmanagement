@@ -2,7 +2,7 @@ using System;
 
 namespace documentservices.models
 {
-    public class document
+    public class Document
     {
         public int Id { get; set; }
         public int Id_Proyect { get; set; }
