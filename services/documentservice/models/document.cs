@@ -1,3 +1,4 @@
+using System;
 namespace documentservices.models
 {
     public class document
