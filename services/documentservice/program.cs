@@ -14,7 +14,10 @@ namespace documentservices
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<startup>();
+                    
+                    var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+                    webBuilder.UseStartup<startup>()
+                              .UseUrls($"http://0.0.0.0:{port}");
                 });
     }
 }
