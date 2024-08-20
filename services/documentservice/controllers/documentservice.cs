@@ -1,6 +1,7 @@
 using documentservices.models;  
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using System;
 
 namespace documentservices.controllers
 {
@@ -18,6 +19,7 @@ namespace documentservices.controllers
         [HttpPost]
         public IActionResult CreateDocument([FromBody] Document document)
         {
+            document.Created_At = DateTime.UtcNow; 
             _context.Documents.Add(document);
             _context.SaveChanges();
             return Ok(document);
