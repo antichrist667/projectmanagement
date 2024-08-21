@@ -29,6 +29,23 @@ const Dashboard = () => {
     navigate('/delete-project');
   };
 
+
+  const navigateToCreateComment = () => {
+    navigate('/create-comment');
+  };
+
+  const navigateToReadComments = () => {
+    navigate('/read-comments');
+  };
+
+  const navigateToUpdateComment = () => {
+    navigate('/update-comment');
+  };
+
+  const navigateToDeleteComment = () => {
+    navigate('/delete-comment');
+  };
+
   return (
     <div className="container mt-5">
       <h2>Dashboard</h2>
@@ -50,6 +67,18 @@ const Dashboard = () => {
         </div>
         <div className="col-md-6">
           <button className="btn btn-success btn-lg btn-block" onClick={navigateToDeleteProject}>DELETE PROJECT</button>
+        </div>
+        <div className="col-md-6">
+          <button className="btn btn-warning btn-lg btn-block" onClick={navigateToCreateComment}>CREATE COMMENT</button>
+        </div>
+        <div className="col-md-6">
+          <button className="btn btn-warning btn-lg btn-block" onClick={navigateToReadComments}>READ COMMENTS</button>
+        </div>
+        <div className="col-md-6">
+          <button className="btn btn-warning btn-lg btn-block" onClick={navigateToUpdateComment}>UPDATE COMMENT</button>
+        </div>
+        <div className="col-md-6">
+          <button className="btn btn-warning btn-lg btn-block" onClick={navigateToDeleteComment}>DELETE COMMENT</button>
         </div>
       </div>
     </div>

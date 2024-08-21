@@ -8,6 +8,10 @@ import CreateProject from './components/createproject';
 import ReadProjects from './components/readprojects';
 import UpdateProject from './components/updateproject';
 import DeleteProject from './components/deleteproject';
+import CreateComment from './components/createcomment';
+import ReadComments from './components/readcomments';
+import UpdateComment from './components/updatecomment';
+import DeleteComment from './components/deletecomment';
 
 const App = () => {
   return (
@@ -21,6 +25,10 @@ const App = () => {
         <Route path="/read-projects" element={<ReadProjects />} />
         <Route path="/update-project" element={<UpdateProject />} />
         <Route path="/delete-project" element={<DeleteProject />} />
+        <Route path="/create-comment" element={<CreateComment />} />
+        <Route path="/read-comments" element={<ReadComments />} />
+        <Route path="/update-comment" element={<UpdateComment />} />
+        <Route path="/delete-comment" element={<DeleteComment />} />
       </Routes>
     </Router>
   );
