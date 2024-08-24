@@ -10,7 +10,6 @@ const Chat = () => {
   const [userId, setUserId] = useState(null);
   const [ws, setWs] = useState(null);
 
-  
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
@@ -21,18 +20,31 @@ const Chat = () => {
     }
   }, []);
 
-  
-  const fetchMessages = async () => {
-    try {
-      const response = await axios.get('https://chatservice-zondeli7dq-uc.a.run.app/api/chats');
-      setMessages(response.data);
-    } catch (error) {
-      console.error('Error al obtener los mensajes:', error);
-      setError('Error al obtener los mensajes');
-    }
-  };
+  useEffect(() => {
+    
+    const websocketUrl = 'ws://chatservice-zondeli7dq-uc.a.run.app'; 
+    const websocket = new WebSocket(websocketUrl);
 
-  
+    websocket.onopen = () => {
+      console.log('Conectado al servidor WebSocket');
+    };
+
+    websocket.onerror = (error) => {
+      console.error('Error en la conexión WebSocket:', error);
+    };
+
+    websocket.onmessage = (event) => {
+      const newMessage = JSON.parse(event.data);
+      setMessages((prevMessages) => [...prevMessages, newMessage]);
+    };
+
+    setWs(websocket);
+
+    return () => {
+      websocket.close();
+    };
+  }, []);
+
   const sendMessage = async (e) => {
     e.preventDefault();
 
@@ -47,13 +59,8 @@ const Chat = () => {
         texto: text,
       };
 
-      await axios.post('https://chatservice-zondeli7dq-uc.a.run.app/api/chats', newMessage, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`, // Envía el token en el header
-        },
-      });
-
+      // Enviar el mensaje al servidor WebSocket
+      ws.send(JSON.stringify(newMessage));
       setText('');
       setError('');
     } catch (error) {
@@ -62,27 +69,10 @@ const Chat = () => {
     }
   };
 
-  
-  useEffect(() => {
-    const websocket = new WebSocket('ws://localhost:8080'); 
-
-    websocket.onmessage = (event) => {
-      const newMessage = JSON.parse(event.data);
-      setMessages((prevMessages) => [...prevMessages, newMessage]);
-    };
-
-    setWs(websocket);
-
-    return () => {
-      websocket.close();
-    };
-  }, []);
-
   return (
     <div className="container mt-5">
       <h2 className="mb-4">Chat</h2>
 
-      {/* Mostrar los mensajes del chat */}
       <div className="mb-4" style={{ maxHeight: '400px', overflowY: 'auto' }}>
         {messages.length === 0 ? (
           <div>No hay mensajes.</div>
@@ -96,7 +86,6 @@ const Chat = () => {
         )}
       </div>
 
-      {/* Formulario para enviar un nuevo mensaje */}
       <form onSubmit={sendMessage}>
         <div className="mb-3">
           <label htmlFor="message" className="form-label">Escribe tu mensaje</label>
