@@ -38,7 +38,8 @@ RUN pip install --no-cache-dir aniso8601==7.0.0 \
     SQLAlchemy==1.4.53 \
     starlette==0.38.2 \
     typing_extensions==4.12.2 \
-    Werkzeug==3.0.3
+    Werkzeug==3.0.3 \
+    flask-cors==4.0.1  
 
 EXPOSE 8080
 

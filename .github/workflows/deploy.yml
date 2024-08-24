@@ -30,6 +30,41 @@ jobs:
         gcloud config set project $GCP_PROJECT_ID
         gcloud auth configure-docker
 
+    - name: Build and push userservice Docker image to Google Container Registry
+      run: |
+        docker build -t gcr.io/$GCP_PROJECT_ID/userservice:latest ./services/userservice
+        docker push gcr.io/$GCP_PROJECT_ID/userservice:latest
+
+    - name: Deploy userservice to Cloud Run
+      run: |
+        gcloud run deploy userservice --image gcr.io/$GCP_PROJECT_ID/userservice:latest --platform managed --region $GCP_REGION --allow-unauthenticated
+
+    - name: Build and push loginservice Docker image to Google Container Registry
+      run: |
+        docker build -t gcr.io/$GCP_PROJECT_ID/loginservice:latest ./services/login
+        docker push gcr.io/$GCP_PROJECT_ID/loginservice:latest
+
+    - name: Deploy loginservice to Cloud Run
+      run: |
+        gcloud run deploy loginservice --image gcr.io/$GCP_PROJECT_ID/loginservice:latest --platform managed --region $GCP_REGION --allow-unauthenticated
+
+    - name: Build and push auditservice Docker image to Google Container Registry
+      run: |
+        docker build -t gcr.io/$GCP_PROJECT_ID/auditservice:latest ./services/auditservice
+        docker push gcr.io/$GCP_PROJECT_ID/auditservice:latest
+
+    - name: Deploy auditservice to Cloud Run
+      run: |
+        gcloud run deploy auditservice --image gcr.io/$GCP_PROJECT_ID/auditservice:latest --platform managed --region $GCP_REGION --allow-unauthenticated
+
+    - name: Build and push projectservice Docker image to Google Container Registry
+      run: |
+        docker build -t gcr.io/$GCP_PROJECT_ID/projectservice:latest ./services/projectservice
+        docker push gcr.io/$GCP_PROJECT_ID/projectservice:latest
+
+    - name: Deploy projectservice to Cloud Run
+      run: |
+        gcloud run deploy projectservice --image gcr.io/$GCP_PROJECT_ID/projectservice:latest --platform managed --region $GCP_REGION --allow-unauthenticated
 
     - name: Build and push commentservice Docker image to Google Container Registry
       run: |
