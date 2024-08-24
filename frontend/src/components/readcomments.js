@@ -9,7 +9,7 @@ const ReadComments = () => {
     useEffect(() => {
         const fetchComments = async () => {
             try {
-                const response = await fetch('https://documentservice-zondeli7dq-uc.a.run.app/comments', {
+                const response = await fetch('https://commentservice-zondeli7dq-uc.a.run.app/comments', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

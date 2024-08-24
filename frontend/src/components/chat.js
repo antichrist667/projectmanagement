@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import * as jwt_decode from 'jwt-decode';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Chat = () => {
@@ -11,17 +10,15 @@ const Chat = () => {
   const [ws, setWs] = useState(null);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      const decodedToken = jwt_decode(token);
-      setUserId(decodedToken.id);
+    const storedUserId = localStorage.getItem('userId');
+    if (storedUserId) {
+      setUserId(storedUserId);
     } else {
       setError('Usuario no autenticado. Inicia sesión.');
     }
   }, []);
 
   useEffect(() => {
-    
     const websocketUrl = 'ws://chatservice-zondeli7dq-uc.a.run.app'; 
     const websocket = new WebSocket(websocketUrl);
 
