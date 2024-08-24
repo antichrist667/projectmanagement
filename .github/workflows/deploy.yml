@@ -75,6 +75,15 @@ jobs:
       run: |
         gcloud run deploy commentservice --image gcr.io/$GCP_PROJECT_ID/commentservice:latest --platform managed --region $GCP_REGION --allow-unauthenticated
 
+    - name: Build and push chatservice Docker image to Google Container Registry
+      run: |
+        docker build -t gcr.io/$GCP_PROJECT_ID/chatservice:latest ./services/chatservice
+        docker push gcr.io/$GCP_PROJECT_ID/chatservice:latest
+
+    - name: Deploy chatservice to Cloud Run
+      run: |
+        gcloud run deploy chatservice --image gcr.io/$GCP_PROJECT_ID/chatservice:latest --platform managed --region $GCP_REGION --allow-unauthenticated
+
     - name: Build and push frontend Docker image to Google Container Registry
       run: |
         docker build -t gcr.io/$GCP_PROJECT_ID/frontend:latest ./frontend

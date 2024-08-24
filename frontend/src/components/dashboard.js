@@ -29,7 +29,6 @@ const Dashboard = () => {
     navigate('/delete-project');
   };
 
-
   const navigateToCreateComment = () => {
     navigate('/create-comment');
   };
@@ -44,6 +43,10 @@ const Dashboard = () => {
 
   const navigateToDeleteComment = () => {
     navigate('/delete-comment');
+  };
+
+  const navigateToChat = () => {
+    navigate('/chat');
   };
 
   return (
@@ -79,6 +82,9 @@ const Dashboard = () => {
         </div>
         <div className="col-md-6">
           <button className="btn btn-warning btn-lg btn-block" onClick={navigateToDeleteComment}>DELETE COMMENT</button>
+        </div>
+        <div className="col-md-6">
+          <button className="btn btn-info btn-lg btn-block" onClick={navigateToChat}>CHAT</button>
         </div>
       </div>
     </div>

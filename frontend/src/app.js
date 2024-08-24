@@ -12,6 +12,7 @@ import CreateComment from './components/createcomment';
 import ReadComments from './components/readcomments';
 import UpdateComment from './components/updatecomment';
 import DeleteComment from './components/deletecomment';
+import Chat from './components/chat'; 
 
 const App = () => {
   return (
@@ -29,6 +30,7 @@ const App = () => {
         <Route path="/read-comments" element={<ReadComments />} />
         <Route path="/update-comment" element={<UpdateComment />} />
         <Route path="/delete-comment" element={<DeleteComment />} />
+        <Route path="/chat" element={<Chat />} />
       </Routes>
     </Router>
   );
