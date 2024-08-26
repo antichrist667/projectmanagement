@@ -7,3 +7,23 @@ __pycache__/
 *.pyd
 env/
 venv/
+
+# Binaries
+suggestions_service
+
+# Go modules
+go.sum
+
+# Protobuf-generated files (optional)
+proto/*.pb.go
+proto/*.pb.gw.go
+
+# IDE/editor-specific files
+.vscode/
+.idea/
+*.swp
+*~
+
+# OS-generated files
+.DS_Store
+Thumbs.db

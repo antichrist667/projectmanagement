@@ -1,4 +1,4 @@
-// services/userservice.js
+
 const User = require('../db/models/usermodel');
 
 const UserService = {

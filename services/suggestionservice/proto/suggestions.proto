@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package suggestions;
+
+import "google/protobuf/timestamp.proto";
+
+service SuggestionsService {
+  rpc CreateSuggestion(Suggestion) returns (SuggestionId);
+  rpc GetSuggestion(SuggestionId) returns (Suggestion);
+  rpc UpdateSuggestion(Suggestion) returns (Suggestion);
+  rpc DeleteSuggestion(SuggestionId) returns (Empty);
+}
+
+message Suggestion {
+  string id = 1;
+  string suggestion = 2;
+  google.protobuf.Timestamp timestamp = 3;
+}
+
+message SuggestionId {
+  string id = 1;
+}
+
+message Empty {}

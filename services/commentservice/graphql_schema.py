@@ -3,12 +3,10 @@ from graphene_sqlalchemy import SQLAlchemyObjectType
 from models import Comment as CommentModel
 from config import SessionLocal
 
-# Definimos el tipo de datos de Comment en GraphQL
 class CommentType(SQLAlchemyObjectType):
     class Meta:
         model = CommentModel
 
-# Definimos las consultas
 class Query(graphene.ObjectType):
     comment = graphene.Field(CommentType, id=graphene.Int(required=True))
     all_comments = graphene.List(CommentType)
@@ -19,7 +17,6 @@ class Query(graphene.ObjectType):
     def resolve_all_comments(self, info):
         return SessionLocal.query(CommentModel).all()
 
-# Definimos las mutaciones
 class CreateComment(graphene.Mutation):
     class Arguments:
         idProyect = graphene.Int(required=True)
@@ -30,8 +27,8 @@ class CreateComment(graphene.Mutation):
     def mutate(self, info, idProyect, content):
         comment = CommentModel(id_proyect=idProyect, content=content)
         SessionLocal.add(comment)
-        SessionLocal.commit()  # Confirmar la transacción
-        SessionLocal.refresh(comment)  # Refrescar la instancia
+        SessionLocal.commit()  
+        SessionLocal.refresh(comment)  
         return CreateComment(comment=comment)
 
 class UpdateComment(graphene.Mutation):
@@ -47,7 +44,7 @@ class UpdateComment(graphene.Mutation):
             if content:
                 comment.content = content
             SessionLocal.commit()
-            SessionLocal.refresh(comment)  # Refrescar la instancia
+            SessionLocal.refresh(comment) 
         return UpdateComment(comment=comment)
 
 class DeleteComment(graphene.Mutation):
@@ -64,7 +61,6 @@ class DeleteComment(graphene.Mutation):
             return DeleteComment(success=True)
         return DeleteComment(success=False)
 
-# Creamos el esquema con Query y Mutaciones
 class Mutation(graphene.ObjectType):
     create_comment = CreateComment.Field()
     update_comment = UpdateComment.Field()

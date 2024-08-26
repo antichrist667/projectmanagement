@@ -75,24 +75,6 @@ jobs:
       run: |
         gcloud run deploy commentservice --image gcr.io/$GCP_PROJECT_ID/commentservice:latest --platform managed --region $GCP_REGION --allow-unauthenticated
 
-    - name: Build and push suggestionsservice Docker image to Google Container Registry
-      run: |
-        docker build -t gcr.io/$GCP_PROJECT_ID/suggestionsservice:latest ./services/suggestionsservice
-        docker push gcr.io/$GCP_PROJECT_ID/suggestionsservice:latest
-
-    - name: Deploy suggestionsservice to Cloud Run
-      run: |
-        gcloud run deploy suggestionsservice --image gcr.io/$GCP_PROJECT_ID/suggestionsservice:latest --platform managed --region $GCP_REGION --allow-unauthenticated
-
-    - name: Build and push documentsservice Docker image to Google Container Registry
-      run: |
-        docker build -t gcr.io/$GCP_PROJECT_ID/documentsservice:latest ./services/documentsservice
-        docker push gcr.io/$GCP_PROJECT_ID/documentsservice:latest
-
-    - name: Deploy documentsservice to Cloud Run
-      run: |
-        gcloud run deploy documentsservice --image gcr.io/$GCP_PROJECT_ID/documentsservice:latest --platform managed --region $GCP_REGION --allow-unauthenticated
-
     - name: Build and push frontend Docker image to Google Container Registry
       run: |
         docker build -t gcr.io/$GCP_PROJECT_ID/frontend:latest ./frontend
