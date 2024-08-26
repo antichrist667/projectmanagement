@@ -45,6 +45,38 @@ const Dashboard = () => {
     navigate('/delete-comment');
   };
 
+  const navigateToCreateDocument = () => {
+    navigate('/create-document');
+  };
+
+  const navigateToReadDocuments = () => {
+    navigate('/read-documents');
+  };
+
+  const navigateToUpdateDocument = () => {
+    navigate('/update-document');
+  };
+
+  const navigateToDeleteDocument = () => {
+    navigate('/delete-document');
+  };
+
+  const navigateToCreateSuggestion = () => {
+    navigate('/create-suggestion');
+  };
+
+  const navigateToReadSuggestions = () => {
+    navigate('/read-suggestions');
+  };
+
+  const navigateToUpdateSuggestion = () => {
+    navigate('/update-suggestion');
+  };
+
+  const navigateToDeleteSuggestion = () => {
+    navigate('/delete-suggestion');
+  };
+
   const navigateToChat = () => {
     navigate('/chat');
   };
@@ -84,7 +116,31 @@ const Dashboard = () => {
           <button className="btn btn-warning btn-lg btn-block" onClick={navigateToDeleteComment}>DELETE COMMENT</button>
         </div>
         <div className="col-md-6">
-          <button className="btn btn-info btn-lg btn-block" onClick={navigateToChat}>CHAT</button>
+          <button className="btn btn-info btn-lg btn-block" onClick={navigateToCreateDocument}>CREATE DOCUMENT</button>
+        </div>
+        <div className="col-md-6">
+          <button className="btn btn-info btn-lg btn-block" onClick={navigateToReadDocuments}>READ DOCUMENTS</button>
+        </div>
+        <div className="col-md-6">
+          <button className="btn btn-info btn-lg btn-block" onClick={navigateToUpdateDocument}>UPDATE DOCUMENT</button>
+        </div>
+        <div className="col-md-6">
+          <button className="btn btn-info btn-lg btn-block" onClick={navigateToDeleteDocument}>DELETE DOCUMENT</button>
+        </div>
+        <div className="col-md-6">
+          <button className="btn btn-danger btn-lg btn-block" onClick={navigateToCreateSuggestion}>CREATE SUGGESTION</button>
+        </div>
+        <div className="col-md-6">
+          <button className="btn btn-danger btn-lg btn-block" onClick={navigateToReadSuggestions}>READ SUGGESTIONS</button>
+        </div>
+        <div className="col-md-6">
+          <button className="btn btn-danger btn-lg btn-block" onClick={navigateToUpdateSuggestion}>UPDATE SUGGESTION</button>
+        </div>
+        <div className="col-md-6">
+          <button className="btn btn-danger btn-lg btn-block" onClick={navigateToDeleteSuggestion}>DELETE SUGGESTION</button>
+        </div>
+        <div className="col-md-6">
+          <button className="btn btn-light btn-lg btn-block" onClick={navigateToChat}>CHAT</button>
         </div>
       </div>
     </div>

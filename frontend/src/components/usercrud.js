@@ -7,7 +7,7 @@ const UserCrud = () => {
   const [newUser, setNewUser] = useState({ name: '', email: '', password: '' });
   const [selectedUser, setSelectedUser] = useState(null);
 
-  const userServiceUrl = 'https://userservice-zondeli7dq-uc.a.run.app/api/users';
+  const userServiceUrl = 'https://user-d9cdx2rl.ue.gateway.dev/api/users';
   
   const navigate = useNavigate(); 
 

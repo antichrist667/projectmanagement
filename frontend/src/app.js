@@ -12,7 +12,15 @@ import CreateComment from './components/createcomment';
 import ReadComments from './components/readcomments';
 import UpdateComment from './components/updatecomment';
 import DeleteComment from './components/deletecomment';
-import Chat from './components/chat'; 
+import CreateDocument from './components/createdocument';
+import ReadDocuments from './components/readdocuments';
+import UpdateDocument from './components/updatedocument';
+import DeleteDocument from './components/deletedocument';
+import CreateSuggestion from './components/createsuggestion';
+import ReadSuggestions from './components/readsuggestions';
+import UpdateSuggestion from './components/updatesuggestion';
+import DeleteSuggestion from './components/deletesuggestion';
+import Chat from './components/chat';
 
 const App = () => {
   return (
@@ -30,6 +38,14 @@ const App = () => {
         <Route path="/read-comments" element={<ReadComments />} />
         <Route path="/update-comment" element={<UpdateComment />} />
         <Route path="/delete-comment" element={<DeleteComment />} />
+        <Route path="/create-document" element={<CreateDocument />} />
+        <Route path="/read-documents" element={<ReadDocuments />} />
+        <Route path="/update-document" element={<UpdateDocument />} />
+        <Route path="/delete-document" element={<DeleteDocument />} />
+        <Route path="/create-suggestion" element={<CreateSuggestion />} />
+        <Route path="/read-suggestions" element={<ReadSuggestions />} />
+        <Route path="/update-suggestion" element={<UpdateSuggestion />} />
+        <Route path="/delete-suggestion" element={<DeleteSuggestion />} />
         <Route path="/chat" element={<Chat />} />
       </Routes>
     </Router>

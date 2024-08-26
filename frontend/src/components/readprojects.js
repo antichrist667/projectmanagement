@@ -9,7 +9,7 @@ const ReadProjects = () => {
 
     const fetchProjects = async () => {
         try {
-            const response = await fetch('https://projectservice-zondeli7dq-uc.a.run.app/api/projects');
+            const response = await fetch('https://projects-d9cdx2rl.ue.gateway.dev/api/projects');
             const data = await response.json();
             setProjects(data);
         } catch (error) {
@@ -19,9 +19,9 @@ const ReadProjects = () => {
 
     const fetchProjectById = async () => {
         try {
-            const response = await fetch(`https://projectservice-zondeli7dq-uc.a.run.app/api/projects/${projectId}`);
+            const response = await fetch(`https://projects-d9cdx2rl.ue.gateway.dev/api/projects/${projectId}`);
             const data = await response.json();
-            setProjects([data]); // Envuelve el proyecto en un array para manejarlo igual que la lista
+            setProjects([data]); 
         } catch (error) {
             console.error('Error fetching project by ID:', error);
             alert('Project not found');

@@ -1,18 +1,33 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const CreateComment = () => {
-    const [comment, setComment] = useState({
+const UpdateDocument = () => {
+    const { id } = useParams();
+    const [document, setDocument] = useState({
         id_proyect: '',
         content: ''
     });
 
     const navigate = useNavigate();
 
+    useEffect(() => {
+        const fetchDocument = async () => {
+            try {
+                const response = await fetch(`https://documents-d9cdx2rl.ue.gateway.dev/api/documents/${id}`);
+                const data = await response.json();
+                setDocument(data);
+            } catch (error) {
+                console.error('Error fetching document:', error);
+            }
+        };
+
+        fetchDocument();
+    }, [id]);
+
     const handleChange = (e) => {
-        setComment({
-            ...comment,
+        setDocument({
+            ...document,
             [e.target.name]: e.target.value
         });
     };
@@ -20,33 +35,20 @@ const CreateComment = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('https://comments-d9cdx2rl.ue.gateway.dev/comments', {
-                method: 'POST',
+            const response = await fetch(`https://documents-d9cdx2rl.ue.gateway.dev/api/documents/${id}`, {
+                method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({
-                    query: `
-                        mutation {
-                            createComment(idProyect: ${comment.id_proyect}, content: "${comment.content}") {
-                                comment {
-                                    id
-                                    idProyect
-                                    content
-                                    createdAt
-                                }
-                            }
-                        }
-                    `
-                })
+                body: JSON.stringify(document)
             });
             const data = await response.json();
-            console.log('Comment created:', data);
-            alert('Comment created successfully!');
+            console.log('Document updated:', data);
+            alert('Document updated successfully!');
             navigate('/dashboard');
         } catch (error) {
-            console.error('Error creating comment:', error);
-            alert('Failed to create comment.');
+            console.error('Error updating document:', error);
+            alert('Failed to update document.');
         }
     };
 
@@ -55,8 +57,8 @@ const CreateComment = () => {
             <div className="row justify-content-center">
                 <div className="col-md-8">
                     <div className="card">
-                        <div className="card-header bg-primary text-white text-center">
-                            <h4>Create New Comment</h4>
+                        <div className="card-header bg-success text-white text-center">
+                            <h4>Update Document</h4>
                         </div>
                         <div className="card-body">
                             <form onSubmit={handleSubmit}>
@@ -67,23 +69,22 @@ const CreateComment = () => {
                                         className="form-control"
                                         name="id_proyect"
                                         placeholder="Enter project ID"
-                                        value={comment.id_proyect}
+                                        value={document.id_proyect}
                                         onChange={handleChange}
                                     />
                                 </div>
                                 <div className="form-group mb-3">
-                                    <label>Comment Content</label>
+                                    <label>Content</label>
                                     <textarea
                                         className="form-control"
                                         name="content"
-                                        placeholder="Enter your comment"
+                                        placeholder="Enter document content"
                                         rows="4"
-                                        value={comment.content}
+                                        value={document.content}
                                         onChange={handleChange}
                                     ></textarea>
                                 </div>
-                                <button type="submit" className="btn btn-primary btn-block mb-2">Create Comment</button>
-                                <button type="button" className="btn btn-secondary btn-block" onClick={() => navigate('/dashboard')}>Back to Dashboard</button>
+                                <button type="submit" className="btn btn-success btn-block">Update Document</button>
                             </form>
                         </div>
                     </div>
@@ -93,4 +94,4 @@ const CreateComment = () => {
     );
 };
 
-export default CreateComment;
+export default UpdateDocument;

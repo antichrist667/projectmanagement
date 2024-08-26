@@ -11,7 +11,7 @@ const Login = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post('https://loginservice-zondeli7dq-uc.a.run.app/api/login', {
+      const response = await axios.post('https://login-d9cdx2rl.ue.gateway.dev/api/login', {
         email,
         password,
       }, {

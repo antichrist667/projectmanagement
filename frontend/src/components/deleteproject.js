@@ -8,7 +8,7 @@ const DeleteProject = () => {
 
     const handleDelete = async () => {
         try {
-            await fetch(`https://projectservice-zondeli7dq-uc.a.run.app/api/projects/${projectId}`, {
+            await fetch(`https://projects-d9cdx2rl.ue.gateway.dev/api/projects/${projectId}`, {
                 method: 'DELETE',
             });
             console.log('Project deleted');

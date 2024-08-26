@@ -25,7 +25,7 @@ const UpdateProject = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch(`https://projectservice-zondeli7dq-uc.a.run.app/api/projects/${projectId}`, {
+            const response = await fetch(`https://projects-d9cdx2rl.ue.gateway.dev/api/projects/${projectId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'

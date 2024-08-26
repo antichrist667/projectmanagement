@@ -2,17 +2,17 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const UpdateComment = () => {
-    const [comment, setComment] = useState({
-        id: '',
+const CreateDocument = () => {
+    const [document, setDocument] = useState({
+        id_proyect: '',
         content: ''
     });
 
     const navigate = useNavigate();
 
     const handleChange = (e) => {
-        setComment({
-            ...comment,
+        setDocument({
+            ...document,
             [e.target.name]: e.target.value
         });
     };
@@ -20,31 +20,20 @@ const UpdateComment = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('https://comments-d9cdx2rl.ue.gateway.dev/comments', {
+            const response = await fetch('https://documents-d9cdx2rl.ue.gateway.dev/api/documents', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({
-                    query: `
-                        mutation {
-                            updateComment(id: ${comment.id}, content: "${comment.content}") {
-                                comment {
-                                    id
-                                    content
-                                }
-                            }
-                        }
-                    `
-                })
+                body: JSON.stringify(document)
             });
             const data = await response.json();
-            console.log('Comment updated:', data);
-            alert('Comment updated successfully!');
+            console.log('Document created:', data);
+            alert('Document created successfully!');
             navigate('/dashboard');
         } catch (error) {
-            console.error('Error updating comment:', error);
-            alert('Failed to update comment.');
+            console.error('Error creating document:', error);
+            alert('Failed to create document.');
         }
     };
 
@@ -53,35 +42,34 @@ const UpdateComment = () => {
             <div className="row justify-content-center">
                 <div className="col-md-8">
                     <div className="card">
-                        <div className="card-header bg-warning text-white text-center">
-                            <h4>Update Comment</h4>
+                        <div className="card-header bg-primary text-white text-center">
+                            <h4>Create New Document</h4>
                         </div>
                         <div className="card-body">
                             <form onSubmit={handleSubmit}>
                                 <div className="form-group mb-3">
-                                    <label>Comment ID</label>
+                                    <label>Project ID</label>
                                     <input
                                         type="number"
                                         className="form-control"
-                                        name="id"
-                                        placeholder="Enter comment ID"
-                                        value={comment.id}
+                                        name="id_proyect"
+                                        placeholder="Enter project ID"
+                                        value={document.id_proyect}
                                         onChange={handleChange}
                                     />
                                 </div>
                                 <div className="form-group mb-3">
-                                    <label>New Content</label>
+                                    <label>Content</label>
                                     <textarea
                                         className="form-control"
                                         name="content"
-                                        placeholder="Enter new content"
+                                        placeholder="Enter document content"
                                         rows="4"
-                                        value={comment.content}
+                                        value={document.content}
                                         onChange={handleChange}
                                     ></textarea>
                                 </div>
-                                <button type="submit" className="btn btn-warning btn-block mb-2">Update Comment</button>
-                                <button type="button" className="btn btn-secondary btn-block" onClick={() => navigate('/dashboard')}>Back to Dashboard</button>
+                                <button type="submit" className="btn btn-primary btn-block">Create Document</button>
                             </form>
                         </div>
                     </div>
@@ -91,4 +79,4 @@ const UpdateComment = () => {
     );
 };
 
-export default UpdateComment;
+export default CreateDocument;
