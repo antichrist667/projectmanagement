@@ -9,7 +9,7 @@ const DeleteDocument = () => {
     useEffect(() => {
         const fetchDocuments = async () => {
             try {
-                const response = await fetch('https://documents-d9cdx2rl.ue.gateway.dev/api/documents');
+                const response = await fetch('https://documentss-d9cdx2rl.uc.gateway.dev/api/documents');
                 const data = await response.json();
                 setDocuments(data);
             } catch (error) {
@@ -23,7 +23,7 @@ const DeleteDocument = () => {
     const handleDelete = async (id) => {
         if (window.confirm('Are you sure you want to delete this document?')) {
             try {
-                await fetch(`https://documents-d9cdx2rl.ue.gateway.dev/api/documents/${id}`, {
+                await fetch(`https://documentss-d9cdx2rl.uc.gateway.dev/api/documents/${id}`, {
                     method: 'DELETE'
                 });
                 setDocuments(documents.filter(document => document.id !== id));

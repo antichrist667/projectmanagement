@@ -20,7 +20,7 @@ const CreateDocument = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('https://documents-d9cdx2rl.ue.gateway.dev/api/documents', {
+            const response = await fetch('https://documentss-d9cdx2rl.uc.gateway.dev/api/documents', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

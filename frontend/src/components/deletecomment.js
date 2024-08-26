@@ -14,7 +14,7 @@ const DeleteComment = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('https://comments-d9cdx2rl.ue.gateway.dev/comments', {
+            const response = await fetch('https://comments-d9cdx2rl.uc.gateway.dev/comments', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
