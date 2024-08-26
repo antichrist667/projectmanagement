@@ -24,7 +24,7 @@ const CreateProject = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('https://projects-d9cdx2rl.ue.gateway.dev/api/projects', {
+            const response = await fetch('https://projectservice-zondeli7dq-uc.a.run.app/api/projects', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

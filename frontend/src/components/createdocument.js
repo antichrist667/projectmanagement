@@ -20,7 +20,7 @@ const CreateDocument = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('https://documentss-d9cdx2rl.uc.gateway.dev/api/documents', {
+            const response = await fetch('https://documentsservice-zondeli7dq-uc.a.run.app/api/documents', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

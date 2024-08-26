@@ -8,7 +8,7 @@ const DeleteSuggestion = () => {
 
     const handleDelete = async () => {
         try {
-            await fetch(`https://suggestions-d9cdx2rl.ue.gateway.dev/api/suggestions/${id}`, {
+            await fetch(`https://suggestionsservice-zondeli7dq-uc.a.run.app/api/suggestions/${id}`, {
                 method: 'DELETE',
             });
             alert('Suggestion deleted successfully!');

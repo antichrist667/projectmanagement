@@ -10,7 +10,7 @@ const UpdateSuggestion = () => {
     useEffect(() => {
         const fetchSuggestion = async () => {
             try {
-                const response = await fetch(`https://suggestions-d9cdx2rl.ue.gateway.dev/api/suggestions/${id}`);
+                const response = await fetch(`https://suggestionsservice-zondeli7dq-uc.a.run.app/api/suggestions/${id}`);
                 const data = await response.json();
                 setSuggestion(data);
             } catch (error) {
@@ -31,7 +31,7 @@ const UpdateSuggestion = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch(`https://suggestions-d9cdx2rl.ue.gateway.dev/api/suggestions/${id}`, {
+            const response = await fetch(`https://suggestionsservice-zondeli7dq-uc.a.run.app/api/suggestions/${id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'

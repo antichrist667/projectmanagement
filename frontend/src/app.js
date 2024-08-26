@@ -20,7 +20,6 @@ import CreateSuggestion from './components/createsuggestion';
 import ReadSuggestions from './components/readsuggestions';
 import UpdateSuggestion from './components/updatesuggestion';
 import DeleteSuggestion from './components/deletesuggestion';
-import Chat from './components/chat';
 
 const App = () => {
   return (
@@ -46,7 +45,6 @@ const App = () => {
         <Route path="/read-suggestions" element={<ReadSuggestions />} />
         <Route path="/update-suggestion" element={<UpdateSuggestion />} />
         <Route path="/delete-suggestion" element={<DeleteSuggestion />} />
-        <Route path="/chat" element={<Chat />} />
       </Routes>
     </Router>
   );

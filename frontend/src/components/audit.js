@@ -7,7 +7,7 @@ const AuditLogs = () => {
   const [auditLogs, setAuditLogs] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [logsPerPage] = useState(5); 
-  const auditServiceUrl = 'https://audit-d9cdx2rl.ue.gateway.dev/api/auditlogs';
+  const auditServiceUrl = 'https://auditservice-zondeli7dq-uc.a.run.app/api/auditlogs';
 
   const navigate = useNavigate(); 
 

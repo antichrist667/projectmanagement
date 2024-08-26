@@ -14,7 +14,7 @@ const UpdateDocument = () => {
     useEffect(() => {
         const fetchDocument = async () => {
             try {
-                const response = await fetch(`https://documentss-d9cdx2rl.uc.gateway.dev/api/documents/${id}`);
+                const response = await fetch(`https://documentsservice-zondeli7dq-uc.a.run.app/api/documents/${id}`);
                 const data = await response.json();
                 setDocument(data);
             } catch (error) {
@@ -35,7 +35,7 @@ const UpdateDocument = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch(`https://documentss-d9cdx2rl.uc.gateway.dev/api/documents/${id}`, {
+            const response = await fetch(`https://documentsservice-zondeli7dq-uc.a.run.app/api/documents/${id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'

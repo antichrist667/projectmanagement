@@ -139,9 +139,6 @@ const Dashboard = () => {
         <div className="col-md-6">
           <button className="btn btn-danger btn-lg btn-block" onClick={navigateToDeleteSuggestion}>DELETE SUGGESTION</button>
         </div>
-        <div className="col-md-6">
-          <button className="btn btn-light btn-lg btn-block" onClick={navigateToChat}>CHAT</button>
-        </div>
       </div>
     </div>
   );

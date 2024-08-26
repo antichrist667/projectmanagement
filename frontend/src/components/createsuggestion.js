@@ -19,7 +19,7 @@ const CreateSuggestion = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('https://suggestions-d9cdx2rl.ue.gateway.dev/api/suggestions', {
+            const response = await fetch('https://suggestionsservice-zondeli7dq-uc.a.run.app/api/suggestions', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

@@ -7,7 +7,7 @@ const ReadDocuments = () => {
     useEffect(() => {
         const fetchDocuments = async () => {
             try {
-                const response = await fetch('https://documentss-d9cdx2rl.uc.gateway.dev/api/documents');
+                const response = await fetch('https://documentsservice-zondeli7dq-uc.a.run.app/api/documents');
                 const data = await response.json();
                 setDocuments(data);
             } catch (error) {
