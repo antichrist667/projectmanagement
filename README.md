@@ -171,7 +171,7 @@ Below is an example of how you can instruct your audience on installing and sett
 - **MongoDB:** A NoSQL database used for storing JSON-like documents with optional schemas.
 - **MySQL:** A relational database management system based on SQL – Structured Query Language.
 - **Google Cloud Pub/Sub:** A messaging service for event-driven systems and analytics.
-- **JWT (JSON Web Token):** A compact, URL-safe means of representing claims to be transferred between two parties.
+
 
 ## 🏁 Setup Instructions <a name = "setup-instructions"></a>
 1. Clone the repository:
